@@ -103,21 +103,21 @@ button{
 </div>
 
 <div id="lock">
-  <h2>Bu sayfa özel 🔐</h2>
-  <p style="font-size:12px;opacity:0.7">İpucu: 6 haneli özel tarih</p>
+  <h2>Bu sayfa sana özel 🔐</h2>
+  <p style="font-size:12px;opacity:0.7">İpucu: Eski şifren aynı zamanda sokak numarası</p>
   <input id="pass" type="password" placeholder="Şifre">
   <button onclick="check()">Giriş</button>
 </div>
 
 <div id="content">
-  <h1>İyi ki doğdun 🎂</h1>
+  <h1>İyi ki doğdun çatlak fıstık 🎂</h1>
   <p id="text"></p>
 </div>
 
 <script>
 
 // 🎬 MESAJ
-const message = `İyi ki doğdun 🤍
+const message = `
 
 Asya...
 
@@ -135,7 +135,7 @@ kolay kolay silinmiyor.
 Ne olursa olsun,
 bu hikâyenin bir yerinde sen hep özel kalacaksın.
 
-İyi ki doğdun.`;
+Yeni yaşın mutluluk ve şans getirsin.`;
 
 // ⚡ DAHA HIZLI TYPE EFFECT
 let i = 0;
@@ -164,7 +164,7 @@ window.onload = ()=>{
 
 // 🔐 LOGIN
 function check(){
-  if(document.getElementById("pass").value === "290704"){
+  if(document.getElementById("pass").value === "3007"){
 
     logUser();
 
