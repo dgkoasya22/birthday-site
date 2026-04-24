@@ -18,7 +18,7 @@ body{
   text-align:center;
 }
 
-/* intro */
+/* 🎬 intro */
 #intro{
   position:fixed;
   inset:0;
@@ -29,30 +29,44 @@ body{
 }
 
 #logo{
-  font-size:32px;
+  font-size:30px;
   color:#e50914;
-  animation:intro 3s ease forwards;
+  animation:intro 3.5s ease forwards;
+  padding:0 20px;
 }
 
 @keyframes intro{
   0%{opacity:0;transform:scale(0.7)}
+  50%{opacity:1;transform:scale(1.1)}
   100%{opacity:0}
 }
 
-/* lock */
-#lock{display:none;flex-direction:column}
+/* 🔐 lock */
+#lock{
+  display:none;
+  flex-direction:column;
+}
 
 input{
   padding:10px;
   margin-top:10px;
+  border-radius:8px;
+  border:none;
 }
 
 button{
   margin-top:10px;
+  padding:10px;
+  border:none;
+  border-radius:8px;
 }
 
-/* content */
-#content{display:none;max-width:600px}
+/* 📜 içerik */
+#content{
+  display:none;
+  max-width:600px;
+  padding:20px;
+}
 
 </style>
 </head>
@@ -65,8 +79,8 @@ button{
 
 <div id="lock">
   <h2>Bu sayfa özel 🔐</h2>
-  <p style="font-size:12px">İpucu: 6 haneli tarih</p>
-  <input id="pass" type="password">
+  <p style="font-size:12px;opacity:0.7">İpucu: 6 haneli özel tarih</p>
+  <input id="pass" type="password" placeholder="Şifre">
   <button onclick="check()">Giriş</button>
 </div>
 
@@ -77,7 +91,8 @@ button{
 
 <script>
 
-const message = `İyi ki doğdun 
+// 🎬 MESAJ
+const message = `İyi ki doğdun 🤍
 
 Asya...
 
@@ -97,33 +112,60 @@ bu hikâyenin bir yerinde sen hep özel kalacaksın.
 
 İyi ki doğdun.`;
 
+// ✍️ yazı efekti (yavaş + düzgün satır)
 let i = 0;
-
 function type(){
   if(i < message.length){
     let c = message[i];
+
     if(c === "\n"){
       document.getElementById("text").innerHTML += "<br>";
     } else {
       document.getElementById("text").innerHTML += c;
     }
+
     i++;
     setTimeout(type, 70);
   }
 }
 
+// 🚀 sayfa başlangıç
 window.onload = ()=>{
   setTimeout(()=>{
     document.getElementById("intro").style.display="none";
     document.getElementById("lock").style.display="flex";
-  },3000);
+  },3500);
 };
 
+// 🔐 giriş kontrol
 function check(){
   if(document.getElementById("pass").value === "290704"){
+
+    logUser(); // 🔥 Firebase log
+
     document.getElementById("lock").style.display="none";
     document.getElementById("content").style.display="block";
+
     type();
+  } else {
+    alert("Yanlış şifre ❌");
+  }
+}
+
+// 🔥 FIREBASE LOG (BOZULMAYAN)
+const DB_URL = "https://dogum-d1b8a-default-rtdb.europe-west1.firebasedatabase.app/logs.json";
+
+function logUser(){
+  try{
+    fetch(DB_URL,{
+      method:"POST",
+      body:JSON.stringify({
+        time:new Date().toLocaleString(),
+        device:navigator.userAgent
+      })
+    });
+  }catch(e){
+    console.log("Firebase hata:", e);
   }
 }
 
