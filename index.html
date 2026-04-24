@@ -16,6 +16,7 @@ body{
   align-items:center;
   justify-content:center;
   text-align:center;
+  overflow:hidden;
 }
 
 /* 🎬 INTRO */
@@ -28,19 +29,41 @@ body{
   justify-content:center;
 }
 
+/* 🔥 NETFLIX LOGO STYLE */
 #logo{
-  font-size:32px;
+  font-size:38px;
+  font-weight:bold;
   color:#e50914;
-  animation:intro 5s ease forwards;
+  text-shadow:0 0 10px #e50914, 0 0 30px #e50914;
+  animation:netflix 5s ease forwards;
   padding:0 20px;
 }
 
-/* 🔥 DÜZELTİLMİŞ ANİMASYON */
-@keyframes intro{
-  0%{opacity:0;transform:scale(0.6)}
-  30%{opacity:1;transform:scale(1)}
-  80%{opacity:1}
-  100%{opacity:0;transform:scale(1.2)}
+/* 🔥 NETFLIX ANIMATION */
+@keyframes netflix{
+  0%{
+    opacity:0;
+    transform:scale(0.5);
+    filter:blur(15px);
+  }
+  20%{
+    opacity:1;
+    transform:scale(1.05);
+    filter:blur(2px);
+  }
+  40%{
+    transform:scale(1);
+    filter:blur(0);
+    text-shadow:0 0 20px #e50914, 0 0 50px #e50914;
+  }
+  70%{
+    opacity:1;
+  }
+  100%{
+    opacity:0;
+    transform:scale(1.2);
+    text-shadow:none;
+  }
 }
 
 /* 🔐 LOCK */
@@ -113,7 +136,7 @@ bu hikâyenin bir yerinde sen hep özel kalacaksın.
 
 İyi ki doğdun.`;
 
-// ✍️ yazı efekti (yavaş + satır düzgün)
+// ✍️ TYPE EFFECT
 let i = 0;
 function type(){
   if(i < message.length){
@@ -130,19 +153,19 @@ function type(){
   }
 }
 
-// 🚀 SAYFA BAŞLANGIÇ (INTRO FIX)
+// 🚀 INTRO SÜRE
 window.onload = ()=>{
   setTimeout(()=>{
     document.getElementById("intro").style.display="none";
     document.getElementById("lock").style.display="flex";
-  },5000); // 🔥 intro ile senkron
+  },5000);
 };
 
-// 🔐 GİRİŞ
+// 🔐 LOGIN
 function check(){
   if(document.getElementById("pass").value === "290704"){
 
-    logUser(); // 🔥 Firebase log
+    logUser(); // 🔥 Firebase
 
     document.getElementById("lock").style.display="none";
     document.getElementById("content").style.display="block";
