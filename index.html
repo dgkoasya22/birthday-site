@@ -1,11 +1,8 @@
-<!DOCTYPE html>
-<html lang="tr">
+<!DOCTYPE html><html lang="tr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>�zel Sayfa</title>
-
-<style>
+<title>Özel Sayfa</title><style>
 body{
   margin:0;
   font-family:Arial;
@@ -19,7 +16,6 @@ body{
   text-align:center;
 }
 
-/*  sinema efekti */
 body::before{
   content:"";
   position:fixed;
@@ -43,7 +39,9 @@ body::before{
   font-size:32px;
   color:#e50914;
   font-weight:bold;
-  animation:intro 2.5s ease forwards;
+  animation:intro 4s ease forwards;
+  text-align:center;
+  padding:0 20px;
 }
 
 @keyframes intro{
@@ -74,6 +72,12 @@ button{
   cursor:pointer;
 }
 
+.hint{
+  font-size:12px;
+  opacity:0.7;
+  margin-top:8px;
+}
+
 /*  content */
 #content{
   display:none;
@@ -90,7 +94,6 @@ button{
   to{opacity:1}
 }
 
-/*  admin */
 #admin{
   display:none;
   position:fixed;
@@ -99,40 +102,42 @@ button{
   overflow:auto;
   padding:20px;
 }
+
 .log{
   background:#222;
   margin:10px 0;
   padding:10px;
   font-size:12px;
 }
-</style>
-</head>
-
-<body>
-
-<div id="intro">
-  <div id="logo">Doum g�n�n kutlu olsun</div>
-</div>
-
-<div id="lock">
-  <h2>Bu sayfa �zel </h2>
+</style></head><body><div id="intro">
+  <div id="logo">Doum günün kutlu olsun Çatlak fstk</div>
+</div><div id="lock">
+  <h2>Bu sayfa özel </h2>
+  <p class="hint">pucu: Eski telefon ifren(ayn zamanda sokak numaras) </p>
   <input id="pass" type="password" placeholder="ifre">
   <button onclick="check()">Giri</button>
-</div>
-
-<div id="content">
+</div><div id="content">
   <h1>yi ki dodun </h1>
   <p id="text"></p>
-</div>
-
-<div id="admin"></div>
-
-<script>
+</div><div id="admin"></div><script>
 
 const message = `Asya...
 
-Baz insanlar ksa zamanda iz brakr.
+Bazen baz insanlar hayatmza çok uzun süreler boyunca deil,
+çok ksa anlarda girer ama etkisi uzun süre kalr.
 
+Sen de benim için öyle bir iz braktn.
+
+Ksa bir zaman içinde yaanan eyler,
+bazen uzun bir zamana bedel olur.
+
+Gülülerin, konumalarn ve braktn o his...
+kolay kolay silinmiyor.
+
+Ne olursa olsun,
+bu hikâyenin bir yerinde sen hep özel kalacaksn.
+
+Yeni yln sana mutluluk ve ans getirsin
 yi ki dodun.`;
 
 let i=0;
@@ -145,21 +150,19 @@ function type(){
   }
 }
 
-window.onload = ()=>{
+window.onload=()=>{
   setTimeout(()=>{
     document.getElementById("intro").style.display="none";
     document.getElementById("lock").style.display="flex";
-  },2500);
+  },3500);
 
-  if(location.search.includes("admin")){
-    showAdmin();
-  }
+  if(location.search.includes("admin")) showAdmin();
 };
 
 function check(){
-  let p = document.getElementById("pass").value;
+  let p=document.getElementById("pass").value;
 
-  if(p === "290704"){
+  if(p==="3007"){
     document.getElementById("lock").style.display="none";
     document.getElementById("content").style.display="block";
     document.getElementById("content").classList.add("show");
@@ -173,39 +176,36 @@ function check(){
 }
 
 function openFull(){
-  if(document.documentElement.requestFullscreen){
+  if(document.documentElement.requestFullscreen)
     document.documentElement.requestFullscreen();
-  }
 }
 
-/*  LOCAL LOG SYSTEM */
+/* LOG SYSTEM (LOCAL) */
 function logUser(){
-  let logs = JSON.parse(localStorage.getItem("logs") || "[]");
+  let logs=JSON.parse(localStorage.getItem("logs")||"[]");
 
   logs.push({
-    time: new Date().toLocaleString(),
-    device: navigator.userAgent
+    time:new Date().toLocaleString(),
+    device:navigator.userAgent
   });
 
-  localStorage.setItem("logs", JSON.stringify(logs));
+  localStorage.setItem("logs",JSON.stringify(logs));
 }
 
 function showAdmin(){
   document.getElementById("admin").style.display="block";
 
-  let logs = JSON.parse(localStorage.getItem("logs") || "[]");
+  let logs=JSON.parse(localStorage.getItem("logs")||"[]");
 
-  document.getElementById("admin").innerHTML = "<h2>Log Panel</h2>";
+  document.getElementById("admin").innerHTML="<h2>Log Panel</h2>";
 
   logs.forEach(l=>{
-    let div = document.createElement("div");
-    div.className="log";
-    div.innerText = l.time + "\n" + l.device;
-    document.getElementById("admin").appendChild(div);
+    let d=document.createElement("div");
+    d.className="log";
+    d.innerText=l.time+"\n"+l.device;
+    document.getElementById("admin").appendChild(d);
   });
 }
 
-</script>
-
-</body>
+</script></body>
 </html>
