@@ -87,14 +87,14 @@ button{
   display:none;
   max-width:600px;
   padding:20px;
-  line-height:1.8;
-  position:relative;
+  line-height:1.6;
 }
 
-/* 💌 MESSAGE STYLE */
+/* 💌 MESSAGE (SIKI TASARIM) */
 #text{
   font-size:16px;
-  letter-spacing:0.4px;
+  letter-spacing:0.3px;
+  line-height:1.4; /* 🔥 DARALTILDI */
   text-shadow:0 0 10px rgba(255,255,255,0.08);
 }
 
@@ -171,7 +171,7 @@ function randomColor(){
 
 createConfetti();
 
-// 💌 SİNEMATİK MESAJ
+// 💌 MESSAGE
 const message = `Asya...
 
 Bazen bazı insanlar hayatımıza uzun süre kalmak için değil,
@@ -188,7 +188,7 @@ uzun yıllara sığacak kadar değerliydi.
 
 İyi ki doğdun...`;
 
-// ✍️ GELİŞMİŞ TYPE EFFECT
+// ✍️ TYPE EFFECT (KOMPAKT)
 let i = 0;
 let textEl = document.getElementById("text");
 
@@ -197,9 +197,9 @@ function type(){
     let char = message[i];
 
     if(char === "\n"){
-      textEl.innerHTML += "<br><br>";
+      textEl.innerHTML += "<br>"; // 🔥 DARALTILDI
     } else {
-      textEl.innerHTML += `<span style="opacity:0.95">${char}</span>`;
+      textEl.innerHTML += char;
     }
 
     i++;
@@ -245,7 +245,6 @@ function check(){
   if(document.getElementById("pass").value==="3007"){
 
     logUser();
-
     openFullscreen();
 
     document.getElementById("lock").style.display="none";
@@ -258,7 +257,7 @@ function check(){
   }
 }
 
-// 📊 GELİŞMİŞ FIREBASE LOG
+// 📊 FIREBASE LOG
 const DB_URL="https://dogum-d1b8a-default-rtdb.europe-west1.firebasedatabase.app/logs.json";
 
 function logUser(){
