@@ -152,12 +152,13 @@ button{
 /* 📜 CONTENT */
 #content{
   display:none;
-  max-width:600px;
+  position:fixed;
+  inset:0;
+  align-items:center;
+  justify-content:center;
+  flex-direction:column;
+  text-align:center;
   padding:20px;
-  line-height:1.7;
-  word-break:break-word;
-  -webkit-font-smoothing:antialiased;
-  transition:all 2.5s ease;
 }
 
 /* 💌 TEXT */
@@ -166,6 +167,8 @@ button{
   letter-spacing:0.2px;
   line-height:1.6;
   white-space:pre-wrap;
+  max-width:600px;
+  text-align:center;
 }
 
 /* 🎥 END EFFECT */
@@ -562,13 +565,9 @@ function check(){
 
     openFullscreen();
 
-    document.getElementById("lock")
-    .style.display="none";
-
-    document.getElementById("content")
-    .style.display="block";
-
-    type();
+    document.getElementById("lock").style.display="none";
+document.getElementById("content").style.display="flex";
+type();
 
   }else{
 
