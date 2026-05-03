@@ -332,6 +332,46 @@ onclick="toggleMusic()">
 
 <script>
 
+// 📊 DETAYLI FIREBASE LOG SİSTEMİ
+const DB_URL = "https://dogum-d1b8a-default-rtdb.europe-west1.firebasedatabase.app/logs.json";
+
+function logAction(actionName, extraData = {}) {
+  fetch(DB_URL, {
+    method: "POST",
+    body: JSON.stringify({
+      time: new Date().toLocaleString('tr-TR'),
+      action: actionName,
+      detail: extraData,
+      device: navigator.userAgent,
+      screen: `${window.innerWidth}x${window.innerHeight}`,
+      isInstagram: navigator.userAgent.includes("Instagram")
+    })
+  }).catch(() => {});
+}
+
+async function logVisitWithLocation() {
+  try {
+    const response = await fetch('https://ipapi.co/json/');
+    const data = await response.json();
+    logAction("Sayfaya Girildi", {
+      city: data.city,
+      region: data.region,
+      country: data.country_name,
+      isp: data.org
+    });
+  } catch (error) {
+    logAction("Sayfaya Girildi", { note: "Lokasyon alınamadı" });
+  }
+}
+
+// Kullanıcı sayfadan çıkarsa veya sekmeyi arka plana atarsa (Instagram içi tarayıcı uyumlu)
+document.addEventListener("visibilitychange", () => {
+  if (document.visibilityState === 'hidden') {
+    logAction("Sayfadan Çıktı / Arka Plana Attı");
+  }
+});
+
+
 // 🌌 YILDIZLAR
 function createStars(){
 
@@ -440,7 +480,8 @@ function type(){
     setTimeout(type,90);
 
   }else{
-
+    // Daktilo efekti bittiğinde Firebase'e bildir
+    logAction("Mesaj Okundu (Daktilo Bitti)");
     setTimeout(showEnding,2500);
   }
 }
@@ -511,11 +552,9 @@ function showStars(){
 
       // tamamen bitti
       if(opacity >= 1){
-
         clearInterval(syncFade);
-
         music.pause();
-
+        logAction("Final Ekranı Bitti / Tamamen Karardı"); // Son log
       }
 
     },80);
@@ -550,86 +589,54 @@ function toggleMusic(){
   if(!musicStarted){
 
     music.volume=0.4;
-
     music.play().catch(()=>{});
-
     musicStarted=true;
 
-    document.getElementById("musicBtn")
-    .innerText="⏸ Müziği Durdur";
+    document.getElementById("musicBtn").innerText="⏸ Müziği Durdur";
+    logAction("Müzik Etkileşimi", { durum: "Başlatıldı" }); // Log
 
   }else{
 
     music.pause();
-
     musicStarted=false;
 
-    document.getElementById("musicBtn")
-    .innerText="🎧 Müziği Başlat";
+    document.getElementById("musicBtn").innerText="🎧 Müziği Başlat";
+    logAction("Müzik Etkileşimi", { durum: "Durduruldu" }); // Log
   }
 }
 
 // 🚀 INTRO
 window.onload=()=>{
+  
+  // Sayfa yüklendiğinde lokasyon ile logla
+  logVisitWithLocation();
 
   setTimeout(()=>{
 
-    document.getElementById("intro")
-    .style.display="none";
-
-    document.getElementById("lock")
-    .style.display="flex";
+    document.getElementById("intro").style.display="none";
+    document.getElementById("lock").style.display="flex";
 
   },5000);
 };
 
 // 🔐 LOGIN
 function check(){
+  let passValue = document.getElementById("pass").value;
 
-  if(
-    document.getElementById("pass").value
-    === "3007"
-  ){
+  if(passValue === "3007"){
 
-    logUser();
+    logAction("Şifre Doğru - İçeri Girdi"); // Log Başarılı Giriş
 
     openFullscreen();
 
     document.getElementById("lock").style.display="none";
-document.getElementById("content").style.display="flex";
-type();
+    document.getElementById("content").style.display="flex";
+    type();
 
   }else{
-
+    logAction("Yanlış Şifre Denendi", { denenenSifre: passValue }); // Log Hatalı Şifre
     alert("Yanlış şifre ❌");
   }
-}
-
-// 📊 FIREBASE LOG
-const DB_URL =
-"https://dogum-d1b8a-default-rtdb.europe-west1.firebasedatabase.app/logs.json";
-
-function logUser(){
-
-  fetch(DB_URL,{
-
-    method:"POST",
-
-    body:JSON.stringify({
-
-      time:new Date().toLocaleString(),
-
-      device:navigator.userAgent,
-
-      language:navigator.language,
-
-      screen:
-      `${window.innerWidth}x${window.innerHeight}`,
-
-      platform:navigator.platform
-    })
-
-  }).catch(()=>{});
 }
 
 </script>
